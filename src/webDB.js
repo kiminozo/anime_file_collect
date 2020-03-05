@@ -9,6 +9,7 @@ async function test(name) {
         //console.log(data);
 
         let info = {
+            dirName: name,
             title: data.attributes.titles.ja_jp,
             image: data.attributes.posterImage.medium,
             startDate: data.attributes.startDate,
@@ -16,9 +17,11 @@ async function test(name) {
             episodeCount: data.attributes.episodeCount
         }
         console.log(info);
+        return info;
     } else {
         console.log("no find")
     }
+    return null;
 }
 
 module.exports = {

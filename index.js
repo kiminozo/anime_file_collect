@@ -32,17 +32,32 @@ const textJson = {
 
 let regex = /\[[^\[\]]+\]\S?\[?([^\[\]]+)\]?.+/;
 
-async function test() {
+// async function test() {
+//     for (const name of textJson.dir) {
+//         let result = regex.exec(name);
+//         if (result) {
+//             console.log(result[1]);
+//             await webDB.test(result[1])
+//             //break;
+//         } else {
+//             console.log(name + " no match");
+//         }
+//     }
+// }
+
+async function test2() {
+    let tasks = [];
     for (const name of textJson.dir) {
         let result = regex.exec(name);
         if (result) {
-            console.log(result[1]);
-            await webDB.test(result[1])
-            //break;
-        } else {
-            console.log(name + " no match");
+            tasks.push(webDB.test(result[1]));
         }
     }
+    await Promise.all(tasks);
 }
 
-test();
+try {
+    test2();
+} catch (error) {
+    console.error(error);
+}

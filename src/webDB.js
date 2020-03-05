@@ -3,9 +3,19 @@ const axios = require('axios');
 async function test(name) {
     name = name.replace("_", " ")
     let text = encodeURI(name)
-    let result = await axios.get("https://kitsu.io/api/edge/anime?filter[text]=" + text)
-    if (result.data.data[0]) {
-        console.log(result.data.data[0].attributes.titles.ja_jp);
+    let result = await axios.get("https://kitsu.io/api/edge/anime?filter[text]=" + text);
+    let data = result.data.data[0];
+    if (data) {
+        //console.log(data);
+
+        let info = {
+            title: data.attributes.titles.ja_jp,
+            image: data.attributes.posterImage.medium,
+            startDate: data.attributes.startDate,
+            endDate: data.attributes.endDate,
+            episodeCount: data.attributes.episodeCount
+        }
+        console.log(info);
     } else {
         console.log("no find")
     }

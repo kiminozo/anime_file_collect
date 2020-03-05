@@ -38,6 +38,7 @@ async function test() {
         if (result) {
             console.log(result[1]);
             await webDB.test(result[1])
+            //break;
         } else {
             console.log(name + " no match");
         }

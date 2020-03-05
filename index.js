@@ -53,11 +53,12 @@ async function test2() {
             tasks.push(webDB.test(result[1]));
         }
     }
-    await Promise.all(tasks);
+    try {
+        await Promise.all(tasks);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-try {
-    test2();
-} catch (error) {
-    console.error(error);
-}
+
+test2();

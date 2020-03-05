@@ -19,10 +19,10 @@ function downImage(url, path) {
   });
 }
 
-async function down(info, path) {
-  await downImage(info.image, `${path}${info.title}.png`)
+async function downPoster(info, path) {
+  await downImage(info.image, `${path}\\Poster.jpg`)
 };
 
 module.exports = {
-  down
+    downPoster
 }

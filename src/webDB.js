@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-async function test(name) {
+async function getInfo(name) {
     name = name.replace("_", " ")
     let text = encodeURI(name)
     let result = await axios.get("https://kitsu.io/api/edge/anime?filter[text]=" + text);
@@ -25,5 +25,5 @@ async function test(name) {
 }
 
 module.exports = {
-    test
+    getInfo
 };

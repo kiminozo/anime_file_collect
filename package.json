@@ -6,6 +6,10 @@
   "author": "kiminozo <kiminozo.eien@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2"
+    "@types/axios": "^0.14.0",
+    "@types/node": "^13.7.7",
+    "@types/promise-fs": "^2.1.0",
+    "axios": "^0.19.2",
+    "promise-fs": "^2.1.1"
   }
 }

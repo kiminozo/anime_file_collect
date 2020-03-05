@@ -1,5 +1,6 @@
 const webDB = require('./src/webDB');
-const scan = require('./src/scan');
+const scanner = require('./src/scan');
+const downloader = require('./src/download');
 
 
 const textJson = {
@@ -33,8 +34,9 @@ const textJson = {
 
 let regex = /\[[^\[\]]+\]\S?\[?([^\[\]]+)\]?.+/;
 
-async function scan(name){
-    await webDB.getInfo(name);
+async function scan(name) {
+    let info = await webDB.getInfo(name);
+    await downloader.down(info, "./tmp/")
 }
 
 async function run(names) {
@@ -42,8 +44,8 @@ async function run(names) {
     for (const name of names) {
         let result = regex.exec(name);
         if (result) {
-            tasks.push(webDB.getInfo(result[1]));
-        }else{
+            tasks.push(scan(result[1]));
+        } else {
             //tasks.push(webDB.test(name));
             console.warn("regex no match:" + name)
         }
@@ -59,11 +61,10 @@ async function test() {
     await run(textJson.dir)
 }
 
-
 async function test2() {
-    let names = await scan.scan("H:\\Animation\\2016年4月(剩)");
+    let root = "H:\\Animation\\2016年4月(剩)"
+    let names = await scanner.scan(root);
     await run(names)
 }
 
-test2();
-
+test();

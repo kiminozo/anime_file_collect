@@ -1,27 +1,28 @@
 const fs = require("fs");
 const request = require("request");
 
-function downImage(url,path){
-    return new Promise((resolve,reject) =>    {
-         let file = fs.createWriteStream(path);
-         request.get({
-             url:url
-          }).on('reponse', reponse => {
-               console.debug(reponse)
-          }).pipe(file)
-          .on('finish',() => {
-            resolve('ok');
-          }).on('error',(e) => {
-            reject(e);
-          })
+function downImage(url, path) {
+  return new Promise((resolve, reject) => {
+    let file = fs.createWriteStream(path, {
+      flags: 'w'
     });
+    request.get({
+        url: url
+      }).on('response', response => {
+        //console.debug(response)
+      }).pipe(file)
+      .on('finish', () => {
+        resolve('ok');
+      }).on('error', (e) => {
+        reject(e);
+      })
+  });
 }
 
-class Downloader{
-    static down(info, path) {
-    
-
-    }
+async function down(info, path) {
+  await downImage(info.image, `${path}${info.title}.png`)
 };
 
-module.exports = Downloader
+module.exports = {
+  down
+}

@@ -9,7 +9,9 @@
     "@types/axios": "^0.14.0",
     "@types/node": "^13.7.7",
     "@types/promise-fs": "^2.1.0",
+    "@types/request": "^2.48.4",
     "axios": "^0.19.2",
-    "promise-fs": "^2.1.1"
+    "promise-fs": "^2.1.1",
+    "request": "^2.88.2"
   }
 }

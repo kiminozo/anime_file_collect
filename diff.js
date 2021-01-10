@@ -7,7 +7,12 @@ async function findAll(root) {
     pathStack.push(root);
     while (pathStack.length > 0) {
         let filePath = pathStack.shift();
-        let stat = await fs.stat(filePath);
+        let stat;
+        try{
+            stat = await fs.stat(filePath);
+        }catch(err){
+            continue;
+        }
         if (stat.isDirectory()) {
             result.push(filePath);
             let filePaths = await fs.readdir(filePath);
@@ -43,8 +48,8 @@ function getMap(paths) {
 
 async function diff() {
 
-    let src = await findAlls('../node_modules', '../ritzstar_spider/node_modules');
-    let desc = await findAll('node_modules');
+    let src = await findAlls('S:/已备份', 'S:/download',"S:/2020-10","S:/2020-04");
+    let desc = await findAll('N:');
     let srcMap = getMap(src);
     let descMap = getMap(desc);
     console.log("多余的文件夹:\n");

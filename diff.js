@@ -15,9 +15,17 @@ async function findAll(root) {
         }
         if (stat.isDirectory()) {
             result.push(filePath);
-            let filePaths = await fs.readdir(filePath);
+            let filePaths;
+            try{
+                filePaths = await fs.readdir(filePath);
+            }catch(err){
+                continue;
+            }
             filePaths.forEach(p => {
                 if (p.startsWith('.')) {
+                    return;
+                }
+                if (p.startsWith('@')) {
                     return;
                 }
                 pathStack.push(path.join(filePath, p));
@@ -48,8 +56,10 @@ function getMap(paths) {
 
 async function diff() {
 
-    let src = await findAlls('S:/已备份', 'S:/download',"S:/2020-10","S:/2020-04");
-    let desc = await findAll('N:');
+   let src = await findAlls('S:/download','S:/amine','S:\movies','S:\已备份','S:\剧场版','S:\HD',
+   "S:/2020-10","S:/2020-04","S:/2019-10","S:/2018-10","S:/2018-04","S:/2018-01","S:/2017-10");
+  // let src = await findAll('S:');
+    let desc = await findAlls('I:','N:','P:');
     let srcMap = getMap(src);
     let descMap = getMap(desc);
     console.log("多余的文件夹:\n");

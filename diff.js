@@ -22,6 +22,16 @@ async function findAll(root) {
     return result;
 }
 
+async function findAlls(...roots) {
+    let result = [];
+    let results = await Promise.all(roots.map(root => findAll(root)));
+    results.forEach(p => {
+        p.forEach(item => result.push(item));
+    });
+    return result;
+}
+
+
 function getMap(paths) {
     let map = new Map();
     paths.forEach(p => {
@@ -33,7 +43,7 @@ function getMap(paths) {
 
 async function diff() {
 
-    let src = await findAll('../node_modules');
+    let src = await findAlls('../node_modules', '../ritzstar_spider/node_modules');
     let desc = await findAll('node_modules');
     let srcMap = getMap(src);
     let descMap = getMap(desc);

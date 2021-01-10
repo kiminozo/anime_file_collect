@@ -34,17 +34,17 @@ const textJson = {
 
 let regex = /\[[^\[\]]+\]\S?\[?([^\[\]]+)\]?.+/;
 
-async function scan(name) {
+async function scan(path, name) {
     let info = await webDB.getInfo(name);
-    await downloader.down(info, "./tmp/")
+    await downloader.downPoster(info, path)
 }
 
-async function run(names) {
+async function run(root,names) {
     let tasks = [];
     for (const name of names) {
         let result = regex.exec(name);
         if (result) {
-            tasks.push(scan(result[1]));
+            tasks.push(scan(root + "\\" + name, result[1]));
         } else {
             //tasks.push(webDB.test(name));
             console.warn("regex no match:" + name)
@@ -62,9 +62,10 @@ async function test() {
 }
 
 async function test2() {
-    let root = "H:\\Animation\\2016年4月(剩)"
+    //let root = "H:\\Animation\\2016年4月(剩)"
+    let root = "S:\\unwatched"
     let names = await scanner.scan(root);
-    await run(names)
+    await run(root,names)
 }
 
-test();
+test2();
